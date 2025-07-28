@@ -2,22 +2,16 @@ using UnityEngine;
 
 public class CupeControlManager : MonoBehaviour
 {
-    public Transform enemyPosition;
-
-    Vector3 directionVector;
-
-    float mesafe;
-
-    void Update()
+    Vector3 vector = new Vector3(4, 3, 0);
+    Vector3 birimVector;
+    void Start()
     {
-        if (enemyPosition == null || enemyPosition.gameObject == null) return;
-        directionVector = transform.position - enemyPosition.position;
-        mesafe = directionVector.magnitude; // magnitude metodu vectörün uzunluğunu verir
-        Debug.Log(mesafe);
-        if (mesafe < 2)
-        {
-            Destroy(enemyPosition.gameObject);
-            enemyPosition = null;
-        }
+        birimVector = vector.normalized;
+
+        Debug.Log(birimVector); // (0.80, 0.60, 0.00)
+        Debug.Log(vector); // (4.00, 3.00, 0.00)
+        vector.Normalize();
+        Debug.Log(vector); // (0.80, 0.60, 0.00)
+
     }
 }
