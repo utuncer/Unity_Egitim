@@ -2,31 +2,22 @@ using UnityEngine;
 
 public class CupeControlManager : MonoBehaviour
 {
-    /*
-    - Vector3.zero → (0, 0, 0)
-    - Vector3.one → (1, 1, 1)
-    - Vector3.right → (1, 0, 0)
-    - Vector3.left → (-1, 0, 0)
-    - Vector3.up → (0, 1, 0)
-    - Vector3.forward → (0, 0, 1)
-    */
-    Rigidbody rigibody;
-    void Awake()
-    {
-        rigibody = GetComponent<Rigidbody>();
-    }
+    public Transform enemyPosition;
+
+    Vector3 directionVector;
+
+    float mesafe;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (enemyPosition == null || enemyPosition.gameObject == null) return;
+        directionVector = transform.position - enemyPosition.position;
+        mesafe = directionVector.magnitude; // magnitude metodu vectörün uzunluğunu verir
+        Debug.Log(mesafe);
+        if (mesafe < 2)
         {
-            transform.position = Vector3.up * 10f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("Çalıştı");
-            rigibody.linearVelocity = Vector3.zero; // linearVelocity nesnenin doğrusal (yani düz bir çizgideki) hızını ifade eder.
-            rigibody.angularVelocity = Vector3.zero; // angularVelocity ise nesnenin kendi etrafında dönme hızını ifade eder.
+            Destroy(enemyPosition.gameObject);
+            enemyPosition = null;
         }
     }
 }
