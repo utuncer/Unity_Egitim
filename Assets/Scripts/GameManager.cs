@@ -2,26 +2,32 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public delegate void LevelUpAction();
+    public static GameManager instance;
+    private int score = 0;
 
-    public LevelUpAction onLevelUp;
-
-    private void Start()
+    private void Awake()
     {
-        onLevelUp = PlaySound;
-        onLevelUp += ShowUI;
-        onLevelUp -= PlaySound;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Diğer sahneye geçtiğinde silinmemesi için yazılır
+        }
 
-        if (onLevelUp != null)
-            onLevelUp();
     }
 
-    void PlaySound()
+    public void IncreaseScore()
     {
-        Debug.Log("Oyun Müziği Çalındı");
+        score++;
+        Debug.Log("Skor" + score);
     }
-    void ShowUI()
+
+    public int GetScore()
     {
-        Debug.Log("UI Ekranı Gösterildi");
+        return score;
     }
+
 }
